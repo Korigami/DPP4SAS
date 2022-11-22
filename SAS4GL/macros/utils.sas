@@ -1,4 +1,19 @@
 
+
+%macro numeric_var_count(set);
+	/* liczba zmiennych numerycznych w zbiorze */
+	%local no_of_vars rc;
+	%let rc = %sysfunc(dosubl('
+		data _null_; 
+			set &set; 
+			array vars_num _numeric_;
+			call symputx('no_of_vars', dim(vars_num), "L"); 
+			stop; 
+		run;
+		'));
+	&no_of_vars.
+%mend;
+
 %macro trace(K);
 	/*œlad macierzy*/
 	%local tr trace;
