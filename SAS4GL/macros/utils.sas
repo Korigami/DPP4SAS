@@ -152,6 +152,7 @@ end;
 run;
 
 %macro plot_matrix(matrix);
+	/* rysuje wykres macierzy */
 	data to_plot(keep=i j x);
 		set &matrix.;
 		array k[*] _numeric_;
@@ -167,5 +168,17 @@ run;
 	run;
 
 	proc delete data = to_plot;
+	run;
+%mend;
+
+%macro alter_kernel_for_comparison(kernel, com_kernel);
+	/* zamienia ujemne wartosci kernela na dodatnie */
+	data &com_kernel.(drop = i j);
+		set &kernel.;
+		array Col[*] _numeric_;
+		do i=1 to dim(col);
+			if col[i] < 0 then
+				col[i] = - col[i];
+		end;
 	run;
 %mend;
