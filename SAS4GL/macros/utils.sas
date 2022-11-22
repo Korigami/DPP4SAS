@@ -119,4 +119,21 @@
 %mend;
 
 
+%macro plot_matrix(matrix);
+	data to_plot(keep=i j x);
+		set &matrix.;
+		array k[*] _numeric_;
+		i=_N_;
+		do j=1 to %size(&matrix.);
+			x = k[%size(&matrix.)+1-j];
+			output;
+		end;
+	run;
 
+	proc sgrender data=to_plot template=Heatmap; 
+	   dynamic _X='i' _Y='j' _Z='x' _T="Basic Heat Map";
+	run;
+
+	proc delete data = to_plot;
+	run;
+%mend;
