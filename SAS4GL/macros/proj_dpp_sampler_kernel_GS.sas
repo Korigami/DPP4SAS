@@ -1,6 +1,6 @@
 
 %macro select_index_GS(rank, it);
-	
+	%local sell sel;
 	%let sell = %sysfunc(dosubl('
 							data _null_; 
 								a=&it.;
@@ -12,7 +12,7 @@
 									cum_sum + abs( col1 /* / (&rank. - &it. + 1) */);
 									k + 1;
 								end;
-								call symputx("sel", k, "G");
+								call symputx("sel", k, "L");
 								stop;
 							run;
 						')
