@@ -7,7 +7,7 @@
 		data _null_; 
 			set &set; 
 			array vars_num _numeric_;
-			call symputx('no_of_vars', dim(vars_num), "L"); 
+			call symputx("no_of_vars", dim(vars_num), "L"); 
 			stop; 
 		run;
 		'));
@@ -151,7 +151,7 @@ endgraph;
 end;
 run;
 
-%macro plot_matrix(matrix);
+%macro plot_matrix(matrix, title);
 	/* rysuje wykres macierzy */
 	data to_plot(keep=i j x);
 		set &matrix.;
@@ -164,7 +164,7 @@ run;
 	run;
 
 	proc sgrender data=to_plot template=Heatmap; 
-	   dynamic _X='i' _Y='j' _Z='x' _T="Basic Heat Map";
+	   dynamic _X='i' _Y='j' _Z='x' _T="&title.";
 	run;
 
 	proc delete data = to_plot;
