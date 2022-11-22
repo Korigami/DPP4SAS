@@ -220,3 +220,14 @@ run;
 	quit;	
 
 %mend;
+
+%macro generate_random(size, random_state);
+	/* generating set with size observables of random numbers from uniform distribution on (0,1) */
+	data r(keep=x);
+		call streaminit(&random_state.);
+		do i=1 to &size.;
+			x = rand("UNIFORM");
+			output;
+		end;
+	run;
+%mend;
