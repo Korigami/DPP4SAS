@@ -119,6 +119,23 @@
 %mend;
 
 
+
+/* template for the matrix graphing */
+proc template;              
+define statgraph heatmap;
+dynamic _X _Y _Z _T;       
+ begingraph;
+ entrytitle _T;             
+  layout overlay;
+    heatmapparm x=_X y=_Y colorresponse=_Z /  
+       name="heatmap" primary=true
+       xbinaxis=false ybinaxis=false;  
+    continuouslegend "heatmap";
+  endlayout;
+endgraph;
+end;
+run;
+
 %macro plot_matrix(matrix);
 	data to_plot(keep=i j x);
 		set &matrix.;
