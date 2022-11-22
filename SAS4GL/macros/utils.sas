@@ -182,3 +182,28 @@ run;
 		end;
 	run;
 %mend;
+
+%macro compute_K(L, K);
+
+	proc iml;
+		use &L.; read all into L; close;
+		ones = I(dimension(L)[1]);
+		K =  ones - inv(L+ones);
+		create &K. from K; append from K; close K;
+	quit;	
+
+%mend;
+
+%macro compute_L(K, L);
+	proc iml;
+		
+		use &K.; read all into K; close;
+		no_of_rows = dimension(K)[1];
+		if rank(K) = no_of_rows then 
+			L = K*inv( I(no_of_rows) - K);
+		else
+			L = .;
+		create &L. from L; append from L; close L;
+	quit;	
+
+%mend;
