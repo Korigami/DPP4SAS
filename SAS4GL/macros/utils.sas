@@ -207,3 +207,16 @@ run;
 	quit;	
 
 %mend;
+
+%macro get_eigendecomposition(matrix, eig_vals, eig_vecs);
+	/* Zwraca rozkład na wartości własne (eig_vals) i wektory własne (eig_vecs) */
+	proc iml;
+		use &matrix.; read all into A; close;
+
+		call eigen(val, rvec, A) vecl="lvec";
+		
+		create &eig_vals. from val; append from val;
+		create &eig_vecs. from rvec; append from rvec;
+	quit;	
+
+%mend;
