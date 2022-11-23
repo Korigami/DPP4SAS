@@ -212,7 +212,7 @@ run;
 %mend;
 
 
-%proj_dpp_sampler_eig_GS(evec2, dest = res1, size = 2, random_state = 113)
+%proj_dpp_sampler_eig_GS(evec2, dest = res1, size = ., random_state = 113)
 %proj_dpp_sampler_eig_GS(evec2, dest = res2, size = ., random_state = 11342)
 %proj_dpp_sampler_eig_GS(evec2, dest = res3, size = ., random_state = 1512)
 %proj_dpp_sampler_eig_GS(evec2, dest = res4, size = ., random_state = 4651)
