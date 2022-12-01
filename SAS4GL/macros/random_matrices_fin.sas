@@ -259,7 +259,7 @@ options mprint;
 
 		if &normalize. then
 			do;
-				result_eigvals = result_eigvals / (&beta. * &N.); 
+				result_eigvals = result_eigvals / (&beta. * &M.); 
 			end;
 
 		create &result_eigvals. from result_eigvals; 
