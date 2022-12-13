@@ -52,7 +52,7 @@
 	run;
 
 	proc catalog cat=&libraryname..&catname.;
-		copy out=sashelp.&catname.;
+		copy out=sashelp.&libraryname.;
 	run;
 %mend CreateSources;
 
