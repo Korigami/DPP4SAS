@@ -43,13 +43,14 @@
     </Property>
     <Property name="Normalize" type="boolean" description="Choose if the sample should be normalized." initial="Y"/>
     <Property name="Heurestic_Fix" type="boolean" displayName="Heurestic Fix" description="Choose whether to apply the Heurestic fix to get the non-oversampled sample." initial="Y"/>
-    <Property name="Haar_Mode" displayName="Haar Mode" type="String" description="Choose which haar_mode to select for the Circular Ensemble." initial="Hermite"/>
-    <Control>
-        <ChoiceList>
-            <Choice rawValue="HERMITE"/>
-            <Choice rawValue="QR"/>
-        </ChoiceList>
-    </Control>
+    <Property name="Haar_Mode" displayName="Haar Mode" type="String" description="Choose which haar_mode to select for the Circular Ensemble." initial="Hermite">
+	    <Control>
+		<ChoiceList>
+		    <Choice rawValue="HERMITE"/>
+		    <Choice rawValue="QR"/>
+		</ChoiceList>
+	    </Control>
+    </Property>
     <Property name="Random_state" displayName="Random State"  type="int" description="Choose the seed for the randomness." initial="1618"/>
  </PropertyDescriptors>
  <Views>
