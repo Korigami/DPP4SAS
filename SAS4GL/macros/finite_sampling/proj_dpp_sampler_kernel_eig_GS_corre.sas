@@ -87,7 +87,7 @@
 		end;
 
 		norm22 = norm2;
-
+		norm2 = norm2/&rank.; /*tu zmienilam*/
 		create norm2 from norm2; append from norm2; close norm2;
 		create norm22 from norm22; append from norm22; close norm22;
 		create C from C; append from C; close C;
