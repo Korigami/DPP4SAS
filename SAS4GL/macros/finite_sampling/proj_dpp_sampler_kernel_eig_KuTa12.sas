@@ -64,6 +64,7 @@
 		do i=1 to &N.;
 			norm2[i] = V[i,]*V[i,]`;
 		end;
+		norm2=norm2/rank;
 
 		create norm2 from norm2; append from norm2; close norm2;
 	quit;
