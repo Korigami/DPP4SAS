@@ -8,3 +8,4 @@ RequiresIML: 15.1
 SourceFiles: random_matrices.iml
              exact.iml
              exotic.iml
+             mcmc.iml
