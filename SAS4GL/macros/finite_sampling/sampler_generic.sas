@@ -34,9 +34,9 @@
 %mend;
 
 
-%macro dpp_sampler_generic_kernel(K_set, dest, random_state=1, size=.);
+%macro dpp_sampler_generic_kernel(K_set, dest, random_state);
 
-	%if &size. = . %then %let size = %size(&K_set.);
+	%let size = %size(&K_set.);
 	%generate_random(&size.);	
 	%sampler_generic(&K_set., &dest., &size.);
 %mend;
