@@ -6,3 +6,5 @@ Author:      Ada Gassowska <ada.gassowska.stud@pw.edu.pl> Katarzyna Solawa <kata
 Version:     0.5
 RequiresIML: 15.1
 SourceFiles: random_matrices.iml
+             exact.iml
+             exotic.iml
