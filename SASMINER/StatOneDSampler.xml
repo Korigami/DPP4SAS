@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE Component PUBLIC "-//SAS//EnterpriseMiner DTD Components 1.3//EN" "Components.dtd">
+<Component type="AF" 
+           serverclass="EM6" prefix="STTOD_"
+	   name="Stationary 1-D Sampler" group="DPP" icon="StatOneDSampler.gif"
+	   displayName="Sample Stationary 1-D Sampler"
+	   description="Sample using Stationary 1-D Method."
+	   resource="com.sas.analytics.eminer.visuals.PropertyBundle">
+  <PropertyDescriptors>
+    <Property
+        type="String"
+        name="Location"
+        initial="CATALOG" />
+    <Property
+	    type="String"
+	    name="Catalog"
+	    initial="SASHELP.DPP.StatOneDSampler.SOURCE" />
+    <Property name="Size" type="int"    description="Size parameter (positive intiger)." initial="100" />
+    <Property 
+        name="Mode" displayName="Mode"
+        type="String" initial="descent" 
+        description="Select mode using which you want to sample.">
+        <Control>
+            <ChoiceList>
+                <Choice rawValue="descent"      displayValue="Sample using the descent mode" />
+                <Choice rawValue="carries"      displayValue="Sample using the carries mode" />
+                <Choice rawValue="virtual"      displayValue="Sample using the virtual mode" />
+            </ChoiceList>
+        </Control>
+    </Property>
+    <Property name="Base" type="int"    description="Base for the carries mode." initial="1" />
+    <Property name="X0" type="double"    description="Initial value for the virtual mode. (from (0,1))" initial="0.5" />
+    <Property name="Random_state" displayName="Random State"  type="int" description="Choose the seed for the randomness." initial="1618"/>
+ </PropertyDescriptors>
+ <Views>
+    <View name="Train">
+      <PropertyRef nameref="Size" />
+      <PropertyRef nameref="Mode" />
+      <PropertyRef nameref="Base" />
+      <PropertyRef nameref="X0" />
+      <PropertyRef nameref="Random_state" />
+    </View>
+  </Views>
+</Component>
