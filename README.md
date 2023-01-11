@@ -39,7 +39,12 @@ Usually SASHome directory is in C:\Program Files directory on Windows.
 
 4. Add below line to file SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components\EMList.txt
 ```
-SpectralClustering=SpectralClustering.xml
+BetaFullSampler=BetaFullSampler.xml
+BetaBandSampler=BetaBandSampler.xml
+PoissPlanchSampler=PoissPlanchSampler.xml
+StatOneDSampler=StatOneDSampler.xml
+ExactSampler=ExactSampler.xml
+MCMCSampler=MCMCSampler.xm
 ```
 
 5. Copy icons from 
