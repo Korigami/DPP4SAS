@@ -6,7 +6,14 @@ We provide the implementation in three parts:
 * Package in SAS/IML,
 * Enterprise Miner nodes.
 
-## Installation of IML package
+## Installation of 4GL Macros:
+
+You need to include the path to the chosen file in order to use the macros from that file. This can be done using the %include macro:
+```
+%include "Path_to_chosen_file.sas";
+```
+
+## Installation of IML package:
 
 To install the package use within proc iml:
 ```
@@ -17,7 +24,7 @@ Load the package with:
 package load dppsampl;
 ```
 
-## Installation guide for SAS Enterprise Miner
+## Installation guide for SAS Enterprise Miner:
 
 You might need administrator privilages to perform this operation.
 1. Clone this repository or download it as ZIP, unpack it, and place the contents in the location on your disk available for SAS. 
