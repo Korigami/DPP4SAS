@@ -53,5 +53,5 @@ You might need administrator privilages to perform this operation.
 
 6. Start or restart SAS Enterprise Miner
 
-7. In Exploration tab there should be available new Spectral Clustering node
+7. In Exploration tab there should be available new group (DPP) with the newly installed nodes.
 
