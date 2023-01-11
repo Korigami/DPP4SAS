@@ -204,7 +204,7 @@ finish;
 
 /*GS sampler*/ 
 
-start proj_dpp_sampler_kernel_GS(kernel, size, random_state=.);
+start proj_dpp_sampler_kernel_GS(kernel, size=., random_state=.);
 N = nrow(kernel);
 rank = trace(kernel);
 
