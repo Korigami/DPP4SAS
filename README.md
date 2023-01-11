@@ -20,19 +20,22 @@ package load dppsampl;
 ## Installation guide for SAS Enterprise Miner
 
 You might need administrator privilages to perform this operation.
+1. Clone this repository or download it as ZIP, unpack it, and place the contents in the location on your disk available for SAS. 
 
-1. Copy XML files from repository (DPP4SAS\SASMINER\*.xml) to directory SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components.
+2. Open SAS session, run the code from the file DPP4SAS\SASMINER\create_sources3.sas
+
+3. Copy XML files from repository (DPP4SAS\SASMINER\*.xml) to directory SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components.
 
 Usually SASHome directory is in C:\Program Files directory on Windows.
 
 &lt;version&gt; means wersion of SAS Enterprise Miner, e.g. 15.1
 
-2. Add below line to file SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components\EMList.txt
+4. Add below line to file SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components\EMList.txt
 ```
 SpectralClustering=SpectralClustering.xml
 ```
 
-3. Copy icons from 
+5. Copy icons from 
  * DPP4SAS\SASMINER\gif, 
  * DPP4SAS\SASMINER\gif16 
  * DPP4SAS\SASMINER\gif32 
