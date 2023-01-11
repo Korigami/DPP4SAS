@@ -21,7 +21,7 @@ finish;
 
 
 /*Cholesky sampler*/
-start proj_dpp_sampler_kernel_Chol(kernel, size, random_state=.);
+start proj_dpp_sampler_kernel_Chol(kernel, size=., random_state=.);
 N = nrow(kernel);
 rank = trace(kernel);
 
