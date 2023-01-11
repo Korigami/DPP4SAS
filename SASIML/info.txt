@@ -1,4 +1,3 @@
-
 # SAS/IML Package Information File Format 1.0
 Name:        dppsampl
 Description: This package provides algorithms for sampling from the Determinantal Point Processes (DPPs) for SAS.
