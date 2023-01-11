@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE Component PUBLIC "-//SAS//EnterpriseMiner DTD Components 1.3//EN" "Components.dtd">
 <Component type="AF" 
-           serverclass="EM6" prefix="PSSPL_"
+           serverclass="EM6" prefix="PSSPL"
 	   name="Poissonized Plancharel Sampler" group="DPP" icon="PoissPlanchSampler.gif"
 	   displayName="Sample Poissonized Plancharel"
 	   description="Sample using Poissonized Plancharel Method."
