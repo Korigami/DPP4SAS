@@ -948,7 +948,7 @@ quit;
 
 
 proc datasets nolist lib=work;
-	delete computed_K K;
+	delete computed_K;
 run;
 
 %doendm:
