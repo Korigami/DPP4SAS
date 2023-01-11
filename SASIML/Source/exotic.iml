@@ -11,7 +11,7 @@ start poiss_planch_sample(theta=10, random_state=.);
 	if theta <0 then do;
 
 		/*DO POPRAWIENIA NA BŁĄD - TERAZ JAK DAM ERROR TO SIE WYWALA*/
-		%put THETA MUST BE >=0;
+		print "THETA MUST BE greater then 0";
 
 	end;
 		
@@ -113,7 +113,7 @@ finish;
 start carries_sample(base=10, size=100, random_state=.);
 
 	if base <2 | size <2 then do;
-		%put Base <2 or size<2;
+		print "Base less then 2 or size less then 2";
 		return;
 	end;
 
@@ -173,7 +173,7 @@ start descent_sample(size=10, random_state=123);
 	end;
 
 	if size<2 then do;
-		%put size<2;
+		print "size<2";
 		return;
 	end;
 
@@ -211,7 +211,7 @@ finish;
 start virtual_descent_sample(size=100, x0=0.5, random_state=.);
 
 	if size<2 | x0<=0 | x0 >=1 then do;
-	 %put size<2 or x0<0 or x0>1;
+	 print "size less then 2 or x0 less then 0 or x0 greater then 1";
 	end;
 
 	if random_state=. then do;
