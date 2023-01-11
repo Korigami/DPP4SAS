@@ -22,7 +22,7 @@ sample_from_beta_ensemble_full(
     or of 2 columns (for ensemble_version = "Circular" or "Ginibre").
 	Increase of beta or size should result in more "spread out" distribution.
 
-start sample_from_beta_ensemble_banded(
+sample_from_beta_ensemble_banded(
 	ensemble_version, 
 	size=10, 
 	beta=2, 
