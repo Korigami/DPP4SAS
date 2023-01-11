@@ -161,7 +161,7 @@ start carries_sample(base=10, size=100, random_state=.);
 	return carries`;
 finish;
 
-start descent_sample(size=10, random_state=123);
+start descent_sample(size=100, random_state=.);
 
 	if random_state=. then do;
 		call streaminit(0);
