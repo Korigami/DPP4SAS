@@ -1,0 +1,43 @@
+dppsampl package
+
+Description: This package provides algorithms for sampling from the Determinantal Point Processes (DPPs) for SAS.
+
+Determinantal Point Processes (DPPs) are stochastic processes which allow for sampling a subset from a set
+while respecting the diversity present wthin the set.
+
+Module Syntax:
+
+sample_from_beta_ensemble_full( 
+	ensemble_version, 
+	M_1, M_2, /* M variables only for Laguerre (first) and Jacobi (both). They should be >= Size*/
+	size=10, 
+	beta=2, 
+	normalize=1, 
+	haar_mode="Hermite", /* haar_mode only available for circular ensemble */
+	heurestic_fix=1, /* heurestic_fix only available for circular ensemble */
+	random_state=1618); 
+
+    Samples from Beta ensemble using the full matrix method. 
+    Returns a sample of 1 column (for ensemble_version = "Hermite", "Laguerre", or "Jacobi") 
+    or of 2 columns (for ensemble_version = "Circular" or "Ginibre").
+	Increase of beta or size should result in more "spread out" distribution.
+
+start sample_from_beta_ensemble_banded(
+	ensemble_version, 
+	size=10, 
+	beta=2, 
+	/* distribution specific parameters */
+	loc=0.0, 
+	scale=1.0, 
+	shape = 1.0,
+	a = 1.0,
+	b = 1.0,
+	/* parameters for the algorithm */
+	normalize=1, 
+	heurestic_fix=1,
+	random_state=1618);
+
+    Samples from Beta ensemble using the banded (that is 3- or 5-diagonal) matrix method. 
+    Returns a sample of 1 column (for ensemble_version = "Hermite", "Laguerre", or "Jacobi") 
+    or of 2 columns (for ensemble_version = "Circular").
+	Increase of beta or size should result in more "spread out" distribution.
