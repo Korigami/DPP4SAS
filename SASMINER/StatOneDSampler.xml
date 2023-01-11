@@ -3,8 +3,8 @@
 <Component type="AF" 
            serverclass="EM6" prefix="STTOD"
 	   name="Stationary 1-D Sampler" group="DPP" icon="StatOneDSampler.gif"
-	   displayName="Sample Stationary 1-D Sampler"
-	   description="Sample using Stationary 1-D Method."
+	   displayName="Sample Stationary 1-Dep Sampler"
+	   description="Sample using Stationary 1-Dependent Method."
 	   resource="com.sas.analytics.eminer.visuals.PropertyBundle">
   <PropertyDescriptors>
     <Property
