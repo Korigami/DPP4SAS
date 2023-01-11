@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE Component PUBLIC "-//SAS//EnterpriseMiner DTD Components 1.3//EN" "Components.dtd">
 <Component type="AF" 
-           serverclass="EM6" prefix="BTBND_"
+           serverclass="EM6" prefix="BTBND"
 	   name="Beta Banded Sampler" group="DPP" icon="BetaBandSampler.gif"
 	   displayName="Sample Banded Beta Ensemble"
 	   description="Sample from Beta Ensemble using the banded matrix method."
