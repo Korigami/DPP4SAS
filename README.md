@@ -49,7 +49,7 @@ MCMCSampler=MCMCSampler.xm
 
 5. Copy icons from 
  * DPP4SAS\SASMINER\gif, 
- * DPP4SAS\SASMINER\gif16 
+ * DPP4SAS\SASMINER\gif16,
  * DPP4SAS\SASMINER\gif32 
 
 to repsective directories in SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components.
