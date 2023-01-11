@@ -95,7 +95,7 @@
 		put _infile_;
 	run;
 
-	filename src_cat catalog "&libraryname..&catname..poisson_final.source";
+	filename src_cat catalog "&libraryname..&catname..stationary_1_d.source";
 	filename mydata "&dirPath.\stationary_1_d.sas";
 	data _null_;
 		file src_cat;
