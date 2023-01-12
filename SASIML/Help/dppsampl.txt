@@ -168,7 +168,3 @@ virtual_descent_sample(
 Generates a sample from a mix of DPPs by obtaining a non-uniformly chosen permutation of {0,…,size-1} 
 (using binomial distribution with specified x0 parameter). 
 It is not possible to determine the size of the output sample (it will always be < size). 
-
-
-
-
