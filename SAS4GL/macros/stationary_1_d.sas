@@ -196,7 +196,7 @@ run;
 %mend;
 
 
-%macro stat_1_dep_sampler(size=100, dest=a, mode=descent, base=., x0=0.5, random_state=.);
+%macro stat_1_dep_sampler(size=100, dest=work.stat_sample, mode=descent, base=., x0=0.5, random_state=.);
 
 %if ((&mode ^= descent) & (&mode ^= carries) & (&mode ^= virtual)) %then %do;
 	%put Mode must be one of the following: 'descent', 'carries' or 'virtual';
