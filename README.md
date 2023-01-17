@@ -8,10 +8,13 @@ We provide the implementation in three parts:
 
 ## Installation of 4GL Macros:
 
-You need to include the path to the chosen file in order to use the macros from that file. This can be done using the %include macro:
+You need to include the path to the loadModules file in order to use the provided macros. 
 ```
-%include "Path_to_chosen_file.sas";
+%let dirPath =Path_to_repository;
+%include "&dirPath.\SAS4GL\loadModules.sas";
+%load_modules(&dirPath.);
 ```
+Note that Path_to_repository is the path to the unpacked repository and no quotation marks are added.
 
 ## Installation of IML package:
 
@@ -19,6 +22,7 @@ To install the package use within proc iml:
 ```
 package install 'path to dppsampl.zip';
 ```
+Where the dppsampl.zip file is within the SASIML folder.
 Load the package with:
 ```
 package load dppsampl;
