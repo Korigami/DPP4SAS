@@ -48,7 +48,7 @@ BetaBandSampler=BetaBandSampler.xml
 PoissPlanchSampler=PoissPlanchSampler.xml
 StatOneDSampler=StatOneDSampler.xml
 ExactSampler=ExactSampler.xml
-MCMCSampler=MCMCSampler.xm
+MCMCSampler=MCMCSampler.xml
 ```
 
 5. Copy icons from 
