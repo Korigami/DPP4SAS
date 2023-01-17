@@ -1,0 +1,517 @@
+/*Generates projection matrix K*/
+start generate_K_kernel(size,rank,random_state=.);
+	if random_state=. then random_state=0;
+
+	call streaminit(random_state);
+	call streamrewind(random_state);
+	x = J(rank*size,1);
+	do i=1 to rank*size;
+		x[i] = rand('uniform');
+	end;
+	x = shape(x,size,rank);
+	call qr(q, r, piv, lindep, x);
+	I = diag(j(size,1))[,1:rank];
+	q = q*I;
+	K = q*q`;
+	return K;
+finish;
+
+
+/*kernel=generate_K_kernel(10,8,13);*/
+
+
+/*Cholesky sampler*/
+start proj_dpp_sampler_kernel_Chol(kernel, size=., random_state=.);
+N = nrow(kernel);
+rank = trace(kernel);
+
+if size[1]>rank[1] then do;
+	print rank;
+	print size;
+ 	print "Size should be less then or equal to rank";
+end;
+
+
+else do;
+if size=. then size=rank;
+
+/*if random_state=. then random_state=0;*/
+call streaminit(random_state);
+call streamrewind(random_state);
+A=kernel;
+d=vecdiag(kernel);
+
+orig_indices = (1:N)`;
+R=J(size, 1, 0);
+do i=1 to size;
+	R[i]=rand('uniform');
+end;
+
+do it=1 to size;
+	/*%let sel = %select_index_Chol(&rank., &it.);*/
+	cumsum=0;
+	x=R[it];
+	k=it-1;
+	d_point = it;
+	do while(x>cumsum);
+		cumsum = cumsum + abs(d[d_point] / (rank - it +1));
+		k=k+1;
+		d_point = d_point +1;
+	end;
+
+	sel=k;
+
+	if it ^= size then do;
+		
+		
+		if sel+1 <= size then do;
+			A[(sel+1):size,insert(it,sel,2)] = A[(sel+1):size,insert(it,sel,2)];
+		end;
+		A[insert(it,sel,2),insert(it,sel,2)] = A[insert(sel,it,2),insert(sel,it,2)];
+
+		if it> 1 then do;
+			A[insert(it,sel,2), 1:it-1] = A[insert(sel,it,2), 1:it-1];
+		end;
+		orig_indices[insert(it,sel,2)] = orig_indices[insert(sel,it,2)];
+		d[insert(it,sel,2)] = d[insert(sel,it,2)];
+		A[it, it] = sqrt(d[it]);
+		if it > 1 then do;
+			A[it + 1:size, it] = A[it + 1:size, it] - A[it + 1:size, 1:it-1]*A[it, 1:it-1]`;
+		end;
+		A[it + 1:size, it] = A[it + 1:size, it]/A[it, it];
+		d[it + 1:size] = d[it + 1:size] - A[it + 1:size, it]##2;
+		
+	end;
+	
+
+
+end;
+
+final = orig_indices[1:size];
+return final;
+end;
+
+finish;
+
+
+/*Schur sampler*/
+
+start proj_dpp_sampler_kernel_shur(kernel, size=., random_seed=.);
+N = nrow(kernel);
+rank = trace(kernel);
+
+if size[1]>rank[1] then do;
+	print rank;
+	print size;
+ 	print "Size should be less then or equal to rank";
+end;
+
+else do;
+if size=. then size=rank;
+
+call streaminit(random_seed);
+call streamrewind(random_seed);
+
+avail = J(N,1,1);
+
+schur_comp = vecdiag(kernel)/rank;
+
+K_inv = J(size,size,0);
+
+R=J(size, 1, 0);
+do i=1 to size;
+	R[i]=rand('uniform');
+end;
+
+sampl = J(size,1,0);
+
+do it=1 to size;
+
+	cumsum=0;
+	x=R[it];
+	k=1;
+	do while(x>cumsum);
+		cumsum = cumsum + abs(schur_comp[k]);
+		k=k+1;
+	end;
+	sel=k-1;
+	sampl[it]=sel;
+	avail[sel]=0;
+	avail_indices=loc(avail=1);
+	K=kernel;
+	if it ^= size then do;
+		
+		if it=1 then do;
+			K_inv[1, 1] = 1.0 / K[sel, sel];
+
+		end;
+		
+		else if it=2 then do;
+			i = sampl[1];
+		
+			a = K[sel,sel];
+	    	b = -K[ sel , i];
+			c = -K[i , i];
+			temp1 = a||b;
+			temp2 = b||c;
+			tempK_inv = temp1//temp2;
+			K_inv[{1,2},{1,2}] = tempK_inv/(K[i, i] * K[sel, sel] - K[sel, i]##2) ;
+	
+		end;
+
+
+
+		else do;
+			
+			temp = K_inv[1:it-1, 1:it-1] * K[sampl[1:it-1],sel];
+			schur_sel = K[sel, sel] - K[sel , sampl[1:it-1]]*temp;
+			temp2 = temp/schur_sel;
+
+			K_inv[1:it-1, 1:it-1] = K_inv[1:it-1, 1:it-1] + temp*temp2`;
+			K_inv[1:it-1, it] = -temp2 ; 
+            K_inv[it, 1:it-1] = K_inv[1:it-1, it]`;
+            K_inv[it, it] = 1/schur_sel;
+			
+
+
+			end;
+
+		K_iY = K[avail_indices,sampl[1:it]];
+		tmp = K_iY * K_inv[1:it,1:it];
+		tmp2 = tmp * K_iY`;
+		tmp3 = tmp2[,+];
+		Schur_comp[avail_indices] = (vecdiag(K)[avail_indices] - tmp3);
+		Schur_comp[sel]=0;
+		Schur_comp[avail_indices] = abs(Schur_comp[avail_indices]) / (rank - it);
+
+
+
+
+
+	end;
+	
+
+
+
+
+
+end;
+
+
+return sampl;
+end;
+finish;
+
+/*GS sampler*/ 
+
+start proj_dpp_sampler_kernel_GS(kernel, size=., random_state=.);
+N = nrow(kernel);
+rank = trace(kernel);
+
+if size[1]>rank[1] then do;
+	print rank;
+	print size;
+ 	print "Size should be less then or equal to rank";
+end;
+
+else do;
+if size=. then size=rank;
+
+call streaminit(random_state);
+call streamrewind(random_state);
+
+
+avail = J(N,1,1);
+C=J(N,size,0);
+
+norm2 = vecdiag(kernel)/rank;
+norm22 = vecdiag(kernel);
+
+R=J(size, 1, 0);
+do i=1 to size;
+	R[i]=rand('uniform');
+end;
+
+sampl = J(size,1,0);
+
+do it=1 to size;
+	cumsum=0;
+	x=R[it];
+	k=1;
+	do while(x>cumsum);
+		cumsum = cumsum + abs(norm2[k]);
+		k=k+1;
+	end;
+	sel=k-1;
+
+	sampl[it]=sel;
+	avail[sel]=0;
+	avail_indices=loc(avail=1);
+
+
+
+	if it ^= size then do;
+
+		if it> 1 then do;
+			C[avail_indices, it] 
+					= (
+						kernel[avail_indices, sel] 
+						- C[avail_indices, 1:it-1]*C[sel, 1:it-1]`
+					   )/ sqrt( norm22[sel]);
+		end;
+		else do;
+			C[avail_indices, it]  = kernel[avail_indices, sel] /sqrt( norm22[sel]);
+		end;
+		
+		norm22[avail_indices] 
+				= norm22[avail_indices] 
+					- C[avail_indices, it]##2;
+		norm2[sel] = 0;
+
+		norm2[avail_indices] = abs(norm22[avail_indices]) / (rank - it);
+
+
+
+	end;
+	
+
+
+
+end;
+
+return sampl;
+end;
+finish;
+
+
+/*GS eig sampler*/
+
+
+start proj_dpp_sampler_eig_GS(eig_vecs, size=., random_state=.);
+N=nrow(eig_vecs);
+rank=ncol(eig_vecs);
+
+if size[1]>rank[1] then do;
+	print rank;
+	print size;
+ 	print "Size should be less then or equal to rank";
+end;
+
+else do;
+
+
+if size=. then size=rank;
+
+
+call streaminit(random_state);
+call streamrewind(random_state);
+
+
+avail = J(N,1,1);
+
+
+norm2 = shape(0, N, 1);
+C = shape(0, N,size);
+do i=1 to N;
+	norm2[i] = eig_vecs[i,]*eig_vecs[i,]`;
+end;
+
+norm22 = norm2;
+
+norm2 = norm2/rank; /* do uzgodnienia*/
+
+R=J(size, 1, 0);
+do i=1 to size;
+	R[i]=rand('uniform');
+end;
+
+
+sampl = J(size,1,0);
+
+do it=1 to size;
+	cumsum=0;
+	x=R[it];
+	k=1;
+	do while(x>cumsum);
+		cumsum = cumsum + abs(norm2[k]);
+		k=k+1;
+	end;
+	sel=k-1;
+
+	sampl[it]=sel;
+	avail[sel]=0;
+	avail_indices=loc(avail=1);
+	V=eig_vecs;
+	if it^=size then do;
+
+		if it > 1 then 
+			do;
+				C[avail_indices, it] 
+					= (
+						V[avail_indices,] * V[sel,]`
+						- C[avail_indices, 1:it-1]*C[sel, 1:it-1]`
+					   )/ sqrt( norm22[sel]);
+			end;
+		else  
+			do;
+				C[avail_indices, it]  
+					= V[avail_indices,] * V[sel,]` /sqrt( norm22[sel]);
+			end;
+		norm22[avail_indices] 
+				= norm22[avail_indices] 
+					- C[avail_indices, it]##2;
+		norm2[sel] = 0;
+		norm2[avail_indices] = abs(norm22[avail_indices]) / (rank - it);
+
+
+	end;
+
+
+
+
+
+
+
+end;
+return sampl;
+end;
+finish;
+
+
+/*Generic sampler*/
+
+start sampler_generic(kernel,  random_state=.);
+
+
+size=nrow(kernel);
+
+call streaminit(random_state);
+call streamrewind(random_state);
+
+R=J(size, 1, 0);
+do i=1 to size;
+	R[i]=rand('uniform');
+end;
+
+res = shape(., 1, size);
+A=kernel;
+
+do i=1 to size;
+	
+	if R[i] < A[i,i] then
+		res[1,i] = i;
+	else
+		A[i, i] = A[i, i] -1;
+
+	if i < size then	
+		do;
+
+			A[i+1:size, i] = A[i+1:size, i] / A[i, i];
+			A[i+1:size, i+1:size] 
+					= A[i+1:size, i+1:size] 
+						- A[i+1:size, i]*A[i, i+1:size];
+		end;
+end;
+loc = loc(res ^= .);
+return loc`;
+finish;
+
+
+/*Kuta12 sampler*/
+
+
+
+start proj_dpp_sampl_ker_eig_KuTa12(eig_vecs, size=., random_state=.);
+N = nrow(eig_vecs);
+rank = ncol(eig_vecs);
+
+if size[1]>rank[1] then do;
+	print rank;
+	print size;
+ 	print "Size should be less then or equal to rank";
+end;
+
+else do;
+
+if size=. then size=rank;
+
+call streaminit(random_state);
+call streamrewind(random_state);
+
+
+norm2 = shape(0, N, 1);
+C = shape(0, N,size);
+do i=1 to N;
+	norm2[i] = eig_vecs[i,]*eig_vecs[i,]`;
+end;
+
+
+norm2 = norm2/rank; /* do uzgodnienia*/
+
+Ran_matrix=J(size, 1, 0);
+do i=1 to size;
+	Ran_matrix[i]=rand('uniform');
+end;
+
+
+sampl = J(size,1,0);
+V=eig_vecs;
+
+do it=1 to size;
+
+	cumsum=0;
+	x=Ran_matrix[it];
+	j=1;
+	do while(x>cumsum);
+		cumsum = cumsum + abs(norm2[j]);
+		j=j+1;
+	end;
+	sel=j-1;
+
+	sampl[it]=sel;
+	if it ^= size then do;
+
+		k = loc(V[sel,] ^= 0)[1];
+	
+		tmp = (V[, k] / (V[sel, k])*V[sel, ]);
+
+		V = V- tmp;
+		idx = remove(1:ncol(V),k);
+
+		x=V[,idx];
+
+		call qr(q, r, piv, lindep, V[,idx]);
+
+		m = min(ncol(q), ncol(r));
+		I = diag(j(ncol(q),1))[,1:ncol(r)];
+
+
+		q = q*I;
+		V = q*q`;
+
+		val = nrow(V);
+
+		norm2 = J(val,1,0);
+
+		
+		do i=1 to nrow(V);
+				norm2[i] = V[i,]*V[i,]`;
+		end;
+		locs = loc(sampl^=0);
+		norm2[sampl[locs]] =0;
+		norm2 = abs(norm2)/(rank - it);
+
+	end;
+
+
+end;
+return sampl;
+
+end;
+finish;
+
+/*
+kernel=generate_K_kernel(10,8);
+call eigen(val,rvec,kernel) vecl='lvec';
+eig_vecs= rvec[,loc(val>0.00000001)];
+sampl =  proj_dpp_sampl_ker_eig_KuTa12(eig_vecs,3);*/
