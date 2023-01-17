@@ -13,5 +13,3 @@ filename utils "&dirPath.\SAS4GL\macros\utils.sas";
 %include stat_1_d; 
 %include utils;
 %mend;
-
-%load_modules(dirPath);
