@@ -831,7 +831,7 @@ proc iml;
 quit;
 %mend;
 
-%macro sample_exact(kernel_type ,K_kernel = ., L_kernel = .,K_e_vals=., K_e_vecs=.,L_e_vals=., L_e_vecs=., dest = sample, mode=GS, random_state=., projection=0, size=.);
+%macro sample_exact(kernel_type ,K_kernel = ., L_kernel = .,K_e_vals=., K_e_vecs=.,L_e_vals=., L_e_vecs=., dest = sample, mode=GS, random_state=., projection=N, size=.);
 /*%init(&kernel_type. ,K_kernel = &K_kernel., L_kernel = &L_kernel.,K_e_vals=&K_e_vals., K_e_vecs=&K_e_vecs.,L_e_vals=&L_e_vals., L_e_vecs=&L_e_vecs., dest = &dest., mode=&mode., random_state=&random_state., projection=&projection., size=&size.);*/
 
 %if &random_state. = . %then %let random_state = %random_int();
