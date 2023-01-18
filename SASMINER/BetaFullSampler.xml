@@ -29,8 +29,8 @@
             </ChoiceList>
         </Control>
     </Property>
-    <Property name="M_1" type="double" displayName="M1" description="Distribution parameter for Laguerre and Jacobi ensembles." initial="10.0" />
-    <Property name="M_2" type="double" displayName="M2" description="Distribution parameter for Jacobi ensembles." initial="10.0" />
+    <Property name="M_1" type="double" displayName="M1" description="Distribution parameter for Laguerre and Jacobi ensembles. Must be greater or equal to Size." initial="10.0" />
+    <Property name="M_2" type="double" displayName="M2" description="Distribution parameter for Jacobi ensembles. Must be greater or equal to Size." initial="10.0" />
     <Property name="Size" type="int"  description="Size of sampled subset." initial="10" />
     <Property name="Beta" type ="int" description="Beta value. Can be equal to 1, 2, or 4." initial="2"> 
         <Control>
