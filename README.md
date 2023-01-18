@@ -14,7 +14,7 @@ You need to include the path to the loadModules file in order to use the provide
 %include "&dirPath.\SAS4GL\loadModules.sas";
 %load_modules(&dirPath.);
 ```
-Note that Path_to_repository is the path to the unpacked repository without quotation marks are added.
+Note that Path_to_repository is the path to the unpacked repository without quotation marks added.
 
 ## Installation of IML package:
 
