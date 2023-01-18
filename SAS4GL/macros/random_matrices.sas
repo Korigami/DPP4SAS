@@ -132,7 +132,6 @@
 	LAGUERRE
 */
 
-options mprint; 
 %macro marcenko_pasteur_law(x, M, N, sigma=1.0); /* M >= N */
 	%local c Lm Lp res;
     %let c = %sysevalf( &N. / &M.);
