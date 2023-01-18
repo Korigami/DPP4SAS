@@ -14,7 +14,7 @@ You need to include the path to the loadModules file in order to use the provide
 %include "&dirPath.\SAS4GL\loadModules.sas";
 %load_modules(&dirPath.);
 ```
-Note that Path_to_repository is the path to the unpacked repository and no quotation marks are added.
+Note that Path_to_repository is the path to the unpacked repository without quotation marks are added.
 
 ## Installation of IML package:
 
@@ -22,11 +22,14 @@ To install the package use within proc iml:
 ```
 package install 'path to dppsampl.zip';
 ```
-Where the dppsampl.zip file is within the SASIML folder.
+Where the dppsampl.zip file is within the SASIML folder. (If the .ZIP file is not present, you can make one by creating .ZIP file from all contents of the SASIML/dppsampl folder. Note that the archive has to be named dppsampl.zip).
+
+
 Load the package with:
 ```
 package load dppsampl;
 ```
+Again, the above instruction has to be within the proc iml invocation. Within the same invocation you can use the provided fucntions after loading the package.
 
 ## Installation guide for SAS Enterprise Miner:
 
