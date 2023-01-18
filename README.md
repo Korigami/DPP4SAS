@@ -36,7 +36,11 @@ Again, the above instruction has to be within the proc iml invocation. Within th
 You might need administrator privilages to perform this operation.
 1. Clone this repository or download it as ZIP, unpack it, and place the contents in the location on your disk available for SAS. 
 
-2. Open SAS session, run the code from the file DPP4SAS\SASMINER\create_sources.sas
+2. Open SAS session, run the code from the file DPP4SAS\SASMINER\create_sources.sas. Note that in the line
+```
+%CreateSources(path to ... \DPP4SAS\SASMINER\DPP);
+```
+you need to change "path to ... \DPP4SAS\SASMINER\DPP" into appropriate path.
 
 3. Copy XML files from repository (DPP4SAS\SASMINER\*.xml) to directory SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components.
 
