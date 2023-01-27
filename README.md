@@ -42,7 +42,7 @@ You might need administrator privilages to perform this operation.
 ```
 you need to change "path to ... \DPP4SAS\SASMINER\DPP" into appropriate path.
 
-3. Copy XML files from repository (DPP4SAS\SASMINER\*.xml) to directory SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components.
+3. Copy XML files from repository (DPP4SAS\SASMINER\*.xml) to directory SASHome\SASEnterpriseMinerWorkstationConfiguration\\&lt;version&gt;\WEB-INF\classes\components. (By default, SASHome might be present in Program Files folder on Windows and in /usr/local on UNIX)
 
 Usually SASHome directory is in C:\Program Files directory on Windows.
 
