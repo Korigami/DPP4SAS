@@ -1,1 +1,3 @@
 
+%macro score();
+%mend;
