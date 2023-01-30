@@ -3,7 +3,7 @@
 	%let list = ExactSampler MCMCSampler BetaFullSampler BetaBandSampler PoissPlanchSampler StatOneDSampler;
 	%let list2 = Exact MCMC BTFLL BTBND PSSPL STTOD;
 	%let libraryname = DPP;
-	%do i = 1 %to 2;
+	%do i = 1 %to 6;
 		%let catname = %scan(&list2.,&i.);
 		%let modulename = %scan(&list.,&i.);
 
@@ -47,6 +47,11 @@
 			infile mydata;
 			input;
 			put _infile_;
+		run;
+
+		
+		proc catalog cat=&libraryname..&catname.;
+			copy out=sashelp.&libraryname.;
 		run;
 
 	%end;
