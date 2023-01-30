@@ -33,7 +33,7 @@ Again, the above instruction has to be within the proc iml invocation. Within th
 
 ## Installation guide for SAS Enterprise Miner:
 
-You might need administrator privilages to perform this operation.
+You might need administrator privilages to perform some parts of this installationn.
 1. Clone this repository or download it as ZIP, unpack it, and place the contents in the location on your disk available for SAS. 
 
 2. Open SAS session, run the code from the file DPP4SAS\SASMINER\create_sources.sas. Note that in the line
